@@ -30,7 +30,7 @@ SOURCES+=$$($(1)_SRC)
 MKDIRS+=$$($(1)_BLD)
 
 $$($(1)_SRC):
-	git clone $(2) $$@
+	git clone $(2) --depth 1 $$@
 
 $$($(1)_SRC)/configure: | $$($(1)_SRC) $$($(1)_BLD)
 	cd $$($(1)_SRC) && ./autogen.sh && \
