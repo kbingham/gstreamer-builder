@@ -98,10 +98,3 @@ $(MKDIRS):
 	@mkdir -p $@
 
 sources: $(SOURCES)
-
-s:
-	@echo "Sources: "
-	@echo $(SOURCES) | xargs -n 1
-	@echo "MkDirs:"
-	@echo $(MKDIRS) | xargs -n 1
-
