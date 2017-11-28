@@ -3,6 +3,11 @@ all:
 
 BLDROOT=$(PWD)
 
+DEB_PKGS+=autopoint bison flex
+
+deb:
+	apt-get install -y $(DEB_PKGS)
+
 NPROC=$(shell nproc)
 ifneq ($(NPROC),)
 J:=-j$(NPROC)
