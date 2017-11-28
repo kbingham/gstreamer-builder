@@ -1,4 +1,4 @@
-all:
+all: gstreamer gst-plugins-good gst-plugins-bad gst-plugins-ugly
 	@echo "Done"
 
 BLDROOT=$(PWD)
