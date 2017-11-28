@@ -3,7 +3,8 @@ all: gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugl
 
 BLDROOT=$(PWD)
 
-DEB_PKGS+=autopoint bison flex
+DEB_PKGS+=autoconf autopoint bison flex libtool
+DEB_PKGS+=libglib2.0-dev
 
 deb:
 	apt-get install -y $(DEB_PKGS)
