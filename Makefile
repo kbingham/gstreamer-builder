@@ -2,6 +2,9 @@ all: gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugl
 	@echo "Done"
 
 BLDROOT=$(PWD)
+STAGING=$(BLDROOT)/staging
+
+MKDIRS+=$(STAGING)
 
 DEB_PKGS+=autoconf autopoint bison flex libtool
 DEB_PKGS+=libglib2.0-dev
@@ -40,6 +43,7 @@ $$($(1)_SRC)/configure: | $$($(1)_SRC) $$($(1)_BLD)
 
 $(1)-configure $$($(1)_BLD)/Makefile: $$($(1)_SRC)/configure
 	cd $$($(1)_BLD) && \
+		PKG_CONFIG_PATH=$(STAGING)/usr/lib/pkgconfig \
 		$$($(1)_SRC)/configure \
 			--prefix=/usr \
 			$$($(1)_CONFIGURE_OPTS)
@@ -47,10 +51,19 @@ $(1)-configure $$($(1)_BLD)/Makefile: $$($(1)_SRC)/configure
 $(1)-configure-help: $$($(1)_SRC)/configure
 	$$($(1)_SRC)/configure --help
 
-$(1): | $$($(1)_BLD)/Makefile
+
+$(1)-install: $$($(1)_BLD)/Makefile
 	cd $$($(1)_BLD) && \
-		$$(MAKE) $$(J) && \
-		$$(MAKE) install
+		$$(MAKE) install DESTDIR=$$($(1)_INSTALL)
+
+$(1)-install-staging: $(1)_INSTALL=$(STAGING)
+$(1)-install-staging: $(STAGING) $(1)-install
+
+$(1)-build: $$($(1)_BLD)/Makefile
+	cd $$($(1)_BLD) && \
+		$$(MAKE) $$(J)
+
+$(1): $(1)-build $(1)-install-staging
 
 endef
 
