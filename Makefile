@@ -37,11 +37,14 @@ $$($(1)_SRC)/configure: | $$($(1)_SRC) $$($(1)_BLD)
 		$$($(1)_AUTOGEN_OPTS) && \
 		$$(MAKE) distclean 	## Workaround
 
-$$($(1)_BLD)/Makefile: $$($(1)_SRC)/configure
+$(1)-configure $$($(1)_BLD)/Makefile: $$($(1)_SRC)/configure
 	cd $$($(1)_BLD) && \
 		$$($(1)_SRC)/configure \
 			--prefix=/usr \
 			$$($(1)_CONFIGURE_OPTS)
+
+$(1)-configure-help: $$($(1)_SRC)/configure
+	$$($(1)_SRC)/configure --help
 
 $(1): | $$($(1)_BLD)/Makefile
 	cd $$($(1)_BLD) && \
