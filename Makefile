@@ -62,6 +62,16 @@ $(eval $(call autotools-git,gstreamer,git://anongit.freedesktop.org/gstreamer/gs
 $(eval $(call autotools-git,gst-plugins-good,git://anongit.freedesktop.org/gstreamer/gst-plugins-good))
 
 ######################################################################
+### gst-plugins-bad
+
+$(eval $(call autotools-git,gst-plugins-bad,git://anongit.freedesktop.org/gstreamer/gst-plugins-bad))
+
+######################################################################
+### gst-plugins-ugly
+
+$(eval $(call autotools-git,gst-plugins-ugly,git://anongit.freedesktop.org/gstreamer/gst-plugins-ugly))
+
+######################################################################
 ### Helpers
 
 $(MKDIRS):
