@@ -3,8 +3,10 @@ all: gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugl
 
 BLDROOT=$(PWD)
 STAGING=$(BLDROOT)/staging
+OUTPUT=$(BLDROOT)/output
 
 MKDIRS+=$(STAGING)
+MKDIRS+=$(OUTPUT)
 
 DEB_PKGS+=autoconf autopoint bison flex libtool
 DEB_PKGS+=libglib2.0-dev
@@ -29,9 +31,12 @@ define autotools-git
 
 $(1)_SRC=$(BLDROOT)/src/$(1)
 $(1)_BLD=$(BLDROOT)/bld/$(1)
+$(1)_PKG=$(BLDROOT)/pkg/$(1)
 
 SOURCES+=$$($(1)_SRC)
+
 MKDIRS+=$$($(1)_BLD)
+MKDIRS+=$$($(1)_PKG)
 
 $$($(1)_SRC):
 	git clone $(2) --depth 1 $$@
@@ -58,6 +63,12 @@ $(1)-install: $$($(1)_BLD)/Makefile
 
 $(1)-install-staging: $(1)_INSTALL=$(STAGING)
 $(1)-install-staging: $(STAGING) $(1)-install
+
+$(1)-package: $(1)_INSTALL=$$($(1)_PKG)
+$(1)-package: $$($(1)_PKG) $(OUTPUT) $(1)-install
+	@echo Make a package now
+	cd $$($(1)_PKG) && \
+		tar czf $$(OUTPUT)/$(1).tgz .
 
 $(1)-build: $$($(1)_BLD)/Makefile
 	cd $$($(1)_BLD) && \
