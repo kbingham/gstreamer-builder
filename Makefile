@@ -1,4 +1,4 @@
-all: gstreamer gst-plugins-good gst-plugins-bad gst-plugins-ugly
+all: gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly
 	@echo "Done"
 
 BLDROOT=$(PWD)
@@ -55,6 +55,11 @@ endef
 gstreamer_CONFIGURE_OPTS+=--prefix=/usr
 
 $(eval $(call autotools-git,gstreamer,git://anongit.freedesktop.org/gstreamer/gstreamer))
+
+######################################################################
+### gst-plugins-base
+
+$(eval $(call autotools-git,gst-plugins-base,git://anongit.freedesktop.org/gstreamer/gst-plugins-base))
 
 ######################################################################
 ### gst-plugins-good
